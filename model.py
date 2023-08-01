@@ -145,10 +145,8 @@ class TransformerBlock(nn.Module):
         self,
         x: torch.Tensor,
         freqs_cis: torch.Tensor):
-        h = x + self.attention.forward(
-            self.attention_norm(x),  freqs_cis, mask
-        )
-        out = h + self.feed_forward.forward(self.ffn_norm(h))
+        h = x + self.attention(self.attention_norm(x), freqs_cis)
+        out = h + self.feed_forward(self.ffn_norm(h))
         return out
 
    
